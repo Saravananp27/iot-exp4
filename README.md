@@ -1,9 +1,7 @@
-# NAME:SARAVANAN P
-
-# REF NO:24900878
-
-# EXP-04 Monitoring-Light-intensity-value-in-Thing-speak-cloud
+# Monitoring-Light-intensity-value-in-Thing-speak-cloud
 # Uploading LDR sensor data in Thing Speak cloud
+### NAME: SARAVANAN P
+### REG NO: 24900878
 
 # AIM:
 To monitor the Light-intensity value in the Thing speak cloud using LDR sensor and ESP32 controller.
@@ -94,37 +92,37 @@ Prototype and build IoT systems without setting up servers or developing web sof
 
  
 # PROGRAM:
-~~~#include <WiFi.h>
-
-#include "ThingSpeak.h" // always include thingspeak header file after other header files and custom macros
+```
+#include <WiFi.h>
+#include "ThingSpeak.h"
 #define ldr_pin 34
-char ssid[] = "Naveen";   // your network SSID (name) 
-char pass[] = "24900580";   // your network password
-int keyIndex = 0;            // your network key Index number (needed only for WEP)
+
+char ssid[] = "Akshay"; 
+char pass[] = "Loid D Ackerman :)";
+int keyIndex = 0;
 WiFiClient  client;
 
-unsigned long myChannelNumber =  2788358;
+unsigned long myChannelNumber =  2788340;
 const int ChannelField = 1;
-const char * myWriteAPIKey = "56SY8WNGEK1D5RKI";
+const char * myWriteAPIKey = "Y2YROF4BS19UCV3I";
 
-int ldrValue = 0;       // Variable to store raw analog value
+int ldrValue = 0;
 int lightPercentage = 0;
 
-const int darkValue = 4095; // Analog value in complete darkness
+const int darkValue = 4095;
 const int brightValue = 0;  
 
 
 void setup() 
 {
-  Serial.begin(115200);  //Initialize serial
+  Serial.begin(115200);
   pinMode(ldr_pin, INPUT);
   WiFi.mode(WIFI_STA);   
-  ThingSpeak.begin(client);  // Initialize ThingSpeak
+  ThingSpeak.begin(client);
 }
 
 void loop() 
 {
-  // Connect or reconnect to WiFi
   if(WiFi.status() != WL_CONNECTED)
 {
     Serial.print("Attempting to connect to SSID: ");
@@ -138,28 +136,26 @@ void loop()
     Serial.println("\nConnected.");
   }
 
-  /* LDR sensor */
   int ldrValue= analogRead(ldr_pin);  
   
   lightPercentage = map(ldrValue, darkValue, brightValue, 0, 100);
 
-  // Constrain the percentage to 0-100 range
   lightPercentage = constrain(lightPercentage, 0, 100);
-  Serial.println("Intensity="); //print on serial monitor using ""
+  Serial.println("Intensity=");
   Serial.println(lightPercentage);    
-  Serial.println("%");     //display output on serial monitor
+  Serial.println("%");
   
   ThingSpeak.writeField(myChannelNumber, ChannelField, lightPercentage, myWriteAPIKey);
   delay(5000); 
 }
-~~~
+```
+
 # CIRCUIT DIAGRAM:
-
-
+![Screenshot 2024-12-26 140734](https://github.com/user-attachments/assets/3efefd07-1926-466f-a07b-71ce17095e79)
 
 # OUTPUT:
-![Screenshot 2024-12-17 163120](https://github.com/user-attachments/assets/ee55e040-dee5-44f9-b8f7-613f2ca92d88)
-![Screenshot 2024-12-17 163050](https://github.com/user-attachments/assets/4d387e83-d32f-4b25-9be1-315d16dfc08d)
+![Screenshot 2024-12-26 140746](https://github.com/user-attachments/assets/ca31be87-ecbf-428c-87c8-8247cbacace6)
+![Screenshot 2024-12-26 140800](https://github.com/user-attachments/assets/bc77b540-cbee-40b6-a079-2a7e2bddae09)
 
 # RESULT:
 
